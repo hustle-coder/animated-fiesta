@@ -1,34 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route, Link } from 'react-router'
+import { useParams } from 'react-router'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
-
+function Home() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div>
+      <h1>Home Page</h1>
+      <nav style={{ marginTop: '2rem' }}>
+        <ul style={{ listStyle: 'none', padding: 0 }}>
+          <li style={{ margin: '1rem 0' }}>
+            <Link to="/" style={{ fontSize: '1.2rem' }}>Home</Link>
+          </li>
+          <li style={{ margin: '1rem 0' }}>
+            <Link to="/about" style={{ fontSize: '1.2rem' }}>About (Static Route)</Link>
+          </li>
+          <li style={{ margin: '1rem 0' }}>
+            <Link to="/user/123" style={{ fontSize: '1.2rem' }}>User 123 (Dynamic Route)</Link>
+          </li>
+          <li style={{ margin: '1rem 0' }}>
+            <Link to="/user/456" style={{ fontSize: '1.2rem' }}>User 456 (Dynamic Route)</Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  )
+}
+
+function About() {
+  return (
+    <div>
+      <h1>About Page</h1>
+      <p>This is a static route.</p>
+      <Link to="/">← Back to Home</Link>
+    </div>
+  )
+}
+
+function User() {
+  const { id } = useParams()
+  
+  return (
+    <div>
+      <h1>User Page</h1>
+      <p style={{ fontSize: '1.5rem', color: '#646cff' }}>User ID: {id}</p>
+      <p>This is a dynamic route with a parameter.</p>
+      <Link to="/">← Back to Home</Link>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/user/:id" element={<User />} />
+    </Routes>
   )
 }
 
